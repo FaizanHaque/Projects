@@ -17,7 +17,7 @@ cData = zeros(size(TData(:,:,:,1)));
 %cData(:,:,:) = TData(:,:,:,1).^2;
 %c = 1449 [m/s] + 4.6 [m/sC] T -0.055T^2 + 0.0003T^3 + (1.39 [m/s] -0.012[m/sC]T)(S -35)
 
-cData(:,:,:) = 1449 + 4.6*TData(:,:,:,1) -0.055*TData(:,:,:,1).^2 + 0.0003*TData(:,:,:,1).^3 + (1.39 - 0.012*TData(:,:,:,1)).*(SData(:,:,:,1) -35);
+cData(:,:,:) = 1449 + 4.6*TData(:,:,:,1) -0.055*TData(:,:,:,1).^2 + 0.0003*TData(:,:,:,1).^3 + (1.39 - 0.012*TData(:,:,:,1)).*(SData(:,:,:,1) - 35);
 
 cData = permute(cData,[2 1 3]);
 dMax= length(Depth);
@@ -42,7 +42,13 @@ dMaxStr = num2str(dMax);
 cMin = min(min(min(cData(:,:,:)))) ;
 cMax = max(max(max(cData(:,:,:))));
 figure(1),
-contourf(cData(:,:,1) - cData(:,:,30))
+contourf(cData(:,:,1) - cData(:,:,31))
+    hcb = colorbar;
+set(get(hcb,'Title'),'String',' C [m/s]');
+ylabel('Latitude')
+xlabel('Longitude');
+%caxis([cMin cMax]);
+
 mySlidingFigure(cData, cMin, cMax);
 % for d = 1:length(Depth);
 % d = 1;

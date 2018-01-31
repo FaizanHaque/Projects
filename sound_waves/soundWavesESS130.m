@@ -13,13 +13,17 @@ Depth = ncread(fname, 'depth');
 LonData = ncread(fname, 'longitude');
 LatData = ncread(fname, 'latitude');
 cData = zeros(size(TData(:,:,:,1)));
+cData2 = zeros(size(TData(:,:,:,1)));
 
 %cData(:,:,:) = TData(:,:,:,1).^2;
 %c = 1449 [m/s] + 4.6 [m/sC] T -0.055T^2 + 0.0003T^3 + (1.39 [m/s] -0.012[m/sC]T)(S -35)
 
-cData(:,:,:) = 1449 + 4.6*TData(:,:,:,1) -0.055*TData(:,:,:,1).^2 + 0.0003*TData(:,:,:,1).^3 + (1.39 - 0.012*TData(:,:,:,1)).*(SData(:,:,:,1) -35);
+cData(:,:,:) = 1449 + 4.6*TData(:,:,:,1) -0.055*TData(:,:,:,1).^2 + 0.0003*TData(:,:,:,1).^3 + (1.39 - 0.012*TData(:,:,:,1)).*(SData(:,:,:,1) - 35);
+%cData2(:,:,:) = 1449 + 4.6*TData(:,:,:,1) -0.055*TData(:,:,:,1).^2 + 0.0003*TData(:,:,:,1).^3 + 1.39*(SData(:,:,:,1) - 35) - 0.012*TData(:,:,:,1).*(SData(:,:,:,1) - 35);
 
 cData = permute(cData,[2 1 3]);
+%cData2 = permute(cData2,[2 1 3]);
+%cData3 = cData(:,:,:) - cData2(:,:,:);
 dMax= length(Depth);
 dMaxStr = num2str(dMax);
 % 
@@ -41,6 +45,11 @@ dMaxStr = num2str(dMax);
 % hold on
 cMin = min(min(min(cData(:,:,:)))) ;
 cMax = max(max(max(cData(:,:,:))));
+cMin2 = min(min(min(cData2(:,:,:)))) ;
+cMax2 = max(max(max(cData2(:,:,:))));
+% cMin3 = min(min(min(cData3(:,:,:)))) ;
+% cMax3 = max(max(max(cData3(:,:,:))));
+
 figure(1),
 contourf(cData(:,:,1) - cData(:,:,31))
     hcb = colorbar;
@@ -48,8 +57,13 @@ set(get(hcb,'Title'),'String',' C [m/s]');
 ylabel('Latitude')
 xlabel('Longitude');
 %caxis([cMin cMax]);
+fNo = 100;
+mySlidingFigure(cData, cMin, cMax,fNo);
+fNo2 = 200;
+mySlidingFigure(cData2, cMin2, cMax2,fNo2);
+% fNo3 = 300;
+% mySlidingFigure(cData3, cMin3, cMax3,fNo3);
 
-mySlidingFigure(cData, cMin, cMax);
 % for d = 1:length(Depth);
 % d = 1;
 % h = contourf(LonData,LatData, cData(:,:,d), 'edgecolor', 'none');

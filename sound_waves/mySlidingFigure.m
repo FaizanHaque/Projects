@@ -1,8 +1,8 @@
-function []= mySlidingFigure(cData,cMin,cMax)
+function []= mySlidingFigure(cData,cMin,cMax,fNo)
 %Code from:
 %https://stackoverflow.com/questions/21272559/matlab-adding-slider-on-a-figure
 
-fig=figure(100);
+fig=figure(fNo);
 set(fig,'Name','Image','Toolbar','figure',...
     'NumberTitle','off')
 bgcolor = fig.Color;
