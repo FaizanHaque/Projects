@@ -1,5 +1,5 @@
-%BData = xlsread('ESS114_Final_Bryan_Data.xlsx');
-%CData = xlsread('ESS114_Final_Cesar_Data.xlsx');
+BData = xlsread('ESS114_Final_Bryan_Data.xlsx');
+CData = xlsread('ESS114_Final_Cesar_Data.xlsx');
 
 figure(1)
 title('Comparision of magnetic fields');
@@ -8,8 +8,8 @@ quiver3(BData(:,7),BData(:,6),BData(:,8),BData(:,2),BData(:,3),BData(:,4),qScale
 hold on
 quiver3(CData(:,7),CData(:,6),CData(:,8),CData(:,2),CData(:,3),CData(:,4), qScale, 'k');
 zlabel('elevation (m)');
-ylabel('latitude (°)');
-xlabel('longitude (°)');
+ylabel('latitude (Â°)');
+xlabel('longitude (Â°)');
 
 rotate3d on
 
