@@ -2,9 +2,14 @@ tic
 B_k = xlsread('bryandata_neat.xlsx');
 toc
 tic
-tEnd = 3;
-B_k(:,5) = (B_k(:,5)+23)/23;
-B_k(:,6) = (B_k(:,6))/23;
+tEnd = 4;
+yDis= 23 ;
+xDis= 23;
+
+%yDis= 22.5 ;
+%xDis= 14.5;
+B_k(:,5) = (B_k(:,5)+23)/xDis;
+B_k(:,6) = (B_k(:,6))/yDis;
 Bx = zeros(5,5,tEnd);
 By = zeros(5,5,tEnd);
 Bz = zeros(5,5,tEnd);
@@ -31,8 +36,8 @@ X = ones(5,5);
 Y = ones(5,5);
 Z = zeros(5,5);
 for i = 1:5
-X(i,:) = i*23;
-Y(:,i) = i*23;
+X(i,:) = i*xDis;
+Y(:,i) = i*yDis;
 end
 
 cTitles = ["Absolute Magnetic Field Strength at 11:12pm Sunday 78F ","Absolute Magnetic Field Strength at 2:04pm Monday 77F"," Absolute Magnetic Field Strength at 11:11pm Monday 75F","Absolute Magnetic Field Strength at 3:20 pm 77 F"];
