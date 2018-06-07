@@ -1,6 +1,7 @@
 tic
 B_k = xlsread('bryandata_neat.xlsx');
 toc
+tic
 tEnd = 3;
 B_k(:,5) = (B_k(:,5)+23)/23;
 B_k(:,6) = (B_k(:,6))/23;
@@ -34,12 +35,37 @@ X(i,:) = i*23;
 Y(:,i) = i*23;
 end
 
+cTitles = ["Absolute Magnetic Field Strength at 11:12pm Sunday 78F ","Absolute Magnetic Field Strength at 2:04pm Monday 77F"," Absolute Magnetic Field Strength at 11:11pm Monday 75F","Absolute Magnetic Field Strength at 3:20 pm 77 F"];
+qTitles = ["Magnetic Field at 11:12pm Sunday 78F ","Magnetic Field at 2:04pm Monday 77F","Magnetic Field at 11:11pm Monday 75F","Magnetic Field at 3:20 pm 77 F"];
 
+cLayers = 60:125;
 for time = 1:tEnd
-zlim([-3 3])
+figure(time)
+%    zlim([-3 3])
+
 quiver3(X,Y,Z,Bx(:,:,time),By(:,:,time),Bz(:,:,time),0.3);
+zticks([]);
+xlabel('cm');
+ylabel('cm');
+
 %hold on
 rotate3d on
-drawnow
+title(qTitles(time));
+
+%drawnow
+
+figure(time + 4)
+[C,h]=contourf(X,Y,Babs(:,:,time),cLayers ,'edgecolor','none');
+C_bar = colorbar;
+colormap(flipud(hot));
+xlabel('cm');
+ylabel('cm');
+clabel(C,h);
+ylabel(C_bar,'Magnetic field strenght (?Tesla)')
+%ylabel(C,'Magnetic field strenght (?Tesla)', 'FontSize',15);
+
+title(cTitles(time));
 
 end
+
+toc
